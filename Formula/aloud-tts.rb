@@ -9,8 +9,8 @@ class AloudTts < Formula
 
   depends_on arch: :arm64
   depends_on macos: :sonoma
-  depends_on "python@3.12"
   depends_on "libsndfile"
+  depends_on "python@3.12"
 
   resource "addict" do
     url "https://files.pythonhosted.org/packages/85/ef/fd7649da8af11d93979831e8f1f8097e85e82d5bfeabc8c68b39175d8e75/addict-2.4.0.tar.gz"
@@ -277,7 +277,7 @@ class AloudTts < Formula
 
   resource "packaging" do
     url "https://files.pythonhosted.org/packages/df/de/0d2b39fb4af88a0258f3bac87dfcbb48e73fbdea4a2ed0e2213f9a4c2f9a/packaging-26.1.tar.gz"
-    sha256 "f042152b681c4bfac5cae2742a55e103d27ab2ec0f3d88037146178e2d36600708b"
+    sha256 "f042152b681c4bfac5cae2742a55e103d27ab2ec0f3d88037136b6bfe7c9c5de"
   end
 
   resource "phonemizer-fork" do
@@ -315,7 +315,7 @@ class AloudTts < Formula
     sha256 "b418196607e61081c3226dcd4f0672f2a194828abb9109e9cfb84026564df2d1"
   end
 
-  resource "pydantic_core" do
+  resource "pydantic-core" do
     url "https://files.pythonhosted.org/packages/43/bb/4742f05b739b2478459bb16fa8470549518c802e06ddcf3f106c5081315e/pydantic_core-2.46.2.tar.gz"
     sha256 "37bb079f9ee3f1a519392b73fda2a96379b31f2013c6b467fe693e7f2987f596"
   end
@@ -585,6 +585,6 @@ class AloudTts < Formula
   end
 
   test do
-    assert_match "usage", shell_output("#{bin}/aloud-tts-cli --help 2>&1", 0)
+    assert_match "usage", shell_output("#{bin}/aloud-tts-cli --help 2>&1")
   end
 end
