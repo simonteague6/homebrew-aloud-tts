@@ -547,7 +547,7 @@ class AloudTts < Formula
   end
 
   def install
-    venv = virtualenv_create(libexec, "python@3.12")
+    venv = virtualenv_create(libexec, "python3.12")
     venv.pip_install resources
     # Binary-only wheels (no sdist): install via pip so --no-binary isn't applied
     system libexec/"bin/pip", "install", "--no-deps",
