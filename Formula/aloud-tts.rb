@@ -7,10 +7,10 @@ class AloudTts < Formula
   sha256 "58c665ca1b96159d1b12fcf23ab3840aa9b864daa09b2f9be0d773960981b9e9"
   license "MIT"
 
-  depends_on arch: :arm64
-  depends_on macos: :sonoma
   depends_on "libsndfile"
   depends_on "python@3.12"
+  depends_on arch: :arm64
+  depends_on macos: :sonoma
 
   resource "addict" do
     url "https://files.pythonhosted.org/packages/85/ef/fd7649da8af11d93979831e8f1f8097e85e82d5bfeabc8c68b39175d8e75/addict-2.4.0.tar.gz"
