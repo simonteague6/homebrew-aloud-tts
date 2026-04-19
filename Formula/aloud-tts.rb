@@ -112,11 +112,6 @@ class AloudTts < Formula
     sha256 "49b3a825280bd66b3aa83585ef59c4a8c82f2c8a522dbe754a8bc8d08c85c491"
   end
 
-  # binary wheel — no sdist available
-  resource "espeakng-loader" do
-    url "https://files.pythonhosted.org/packages/a8/26/258c0cd43b9bc1043301c5f61767d6a6c3b679df82790c9cb43a3277b865/espeakng_loader-0.2.4-py3-none-macosx_11_0_arm64.whl"
-    sha256 "d27cdca31112226e7299d8562e889d3e38a1e48055c9ee381b45d669072ee59f"
-  end
 
   resource "filelock" do
     url "https://files.pythonhosted.org/packages/d6/17/6e8890271880903e3538660a21d63a6c1fea969ac71d0d6b608b78727fa9/filelock-3.28.0.tar.gz"
@@ -228,11 +223,6 @@ class AloudTts < Formula
     sha256 "3960fa3e6de179a90ee8e628446a4a4f6b8c730b6e3410999cf396189f4d9c40"
   end
 
-  # binary wheel — Apple Silicon only, no sdist
-  resource "mlx" do
-    url "https://files.pythonhosted.org/packages/38/29/71fe1f68756f515856e6930973c23245810d4aa3cd22fddd719d86a709dc/mlx-0.31.1-cp312-cp312-macosx_14_0_arm64.whl"
-    sha256 "8a63b31a398c9519f2bb0c81cf3865d9baca4ff573ffc31ead465d18286184e8"
-  end
 
   resource "mlx-audio" do
     url "https://files.pythonhosted.org/packages/9d/76/a74893a84caf7f36e401bedd5ccc5342299849a21a6fdf5ef68805d330bd/mlx_audio-0.4.2.tar.gz"
@@ -244,11 +234,6 @@ class AloudTts < Formula
     sha256 "1b2362ea301427004e5dda43b9241d751d4cb80eba641f6b85b29fc493affac5"
   end
 
-  # binary wheel — Apple Silicon only, no sdist
-  resource "mlx-metal" do
-    url "https://files.pythonhosted.org/packages/39/66/2313497fdbc7fbadf8e026c09366e3f049f9114e65ca4edc23cdb8699186/mlx_metal-0.31.1-py3-none-macosx_14_0_arm64.whl"
-    sha256 "70741174131dbf7fdd479cb730e06e08c358eac3bf7905d9e884e7960cfdd5b8"
-  end
 
   resource "msgpack" do
     url "https://files.pythonhosted.org/packages/4d/f2/bfb55a6236ed8725a96b0aa3acbd0ec17588e6a2c3b62a93eb513ed8783f/msgpack-1.1.2.tar.gz"
@@ -475,11 +460,6 @@ class AloudTts < Formula
     sha256 "e07ee6c1d659bc6957034f4800c60cb8b98de798823e34d2a2bba1caa85a4509"
   end
 
-  # binary wheel — no sdist available
-  resource "spacy" do
-    url "https://files.pythonhosted.org/packages/06/df/178bbab47fa209c8baf2f1e609cbddc6b18a985200be1ceee22bd5b89beb/spacy-3.8.14-cp312-cp312-macosx_11_0_arm64.whl"
-    sha256 "e3ebe50b93f2d40e8ec3451255528bb622ccb12be39fd140bb87668ce8d1075b"
-  end
 
   resource "spacy-legacy" do
     url "https://files.pythonhosted.org/packages/d9/79/91f9d7cc8db5642acad830dcc4b49ba65a7790152832c4eceb305e46d681/spacy-legacy-3.0.12.tar.gz"
@@ -567,7 +547,15 @@ class AloudTts < Formula
   end
 
   def install
-    virtualenv_install_with_resources
+    venv = virtualenv_create(libexec, "python@3.12")
+    venv.pip_install resources
+    # Binary-only wheels (no sdist): install via pip so --no-binary isn't applied
+    system libexec/"bin/pip", "install", "--no-deps",
+           "espeakng-loader==0.2.4",
+           "mlx==0.31.1",
+           "mlx-metal==0.31.1",
+           "spacy==3.8.14"
+    venv.pip_install_and_link buildpath
   end
 
   def caveats
